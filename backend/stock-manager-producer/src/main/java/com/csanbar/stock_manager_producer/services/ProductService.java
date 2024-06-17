@@ -29,4 +29,8 @@ public class ProductService {
     public List<Product> getByQuantity(String quantity) {
         return repository.getAllByQuantity(quantity);
     }
+
+    public boolean updateProduct(Product product, String id) {
+        return repository.updateProduct(product, id);
+    }
 }

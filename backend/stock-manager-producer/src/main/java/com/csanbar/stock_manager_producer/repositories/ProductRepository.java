@@ -26,7 +26,7 @@ public class ProductRepository {
     }
 
     public List<Product> getAllProducts() {
-        String sql = "SELECT * FROM "+table;
+        String sql = "SELECT * FROM " + table;
         return namedParameterJdbcTemplate.query(sql, mapper);
     }
 
@@ -41,17 +41,32 @@ public class ProductRepository {
     }
 
     public List<Product> getAllByCaducity(String caducity) {
-        String sql = "SELECT * FROM "+table+" WHERE abs(datediff(curdate(), pro_caducity)) <= :caducity";
+        String sql = "SELECT * FROM " + table + " WHERE abs(datediff(curdate(), pro_caducity)) <= :caducity";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("caducity", caducity);
         return namedParameterJdbcTemplate.query(sql, params, mapper);
     }
 
     public List<Product> getAllByQuantity(String quantity) {
-        String sql = "SELECT * FROM "+table+" WHERE pro_quantity <= :quantity";
+        String sql = "SELECT * FROM " + table + " WHERE pro_quantity <= :quantity";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("quantity", quantity);
         return namedParameterJdbcTemplate.query(sql, params, mapper);
+    }
+
+    public boolean updateProduct(Product product, String id) {
+        String sql = "UPDATE " + table + " SET pro_name = IFNULL(:name, pro_name), pro_quantity = IFNULL(:quantity, pro_quantity), pro_caducity = IFNULL(:caducity, pro_caducity), pro_entry_date = IFNULL(:entry_date,pro_entry_date) WHERE pro_id = :id";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+        params.addValue("name", product.pro_name);
+        params.addValue("quantity", product.pro_quantity);
+        params.addValue("caducity", product.pro_caducity);
+        params.addValue("entry_date", product.pro_entry_date);
+
+        int rowsAffected = namedParameterJdbcTemplate.update(sql, params);
+        return rowsAffected > 0;
+
     }
 
     private static class ProductMapper implements RowMapper<Product> {
@@ -61,7 +76,7 @@ public class ProductRepository {
             long proId = rs.getLong("pro_id");
             String proName = rs.getString("pro_name");
             int proQuantity = rs.getInt("pro_quantity");
-            Date proCaducity  = rs.getDate("pro_caducity");
+            Date proCaducity = rs.getDate("pro_caducity");
             Date proEntryDate = rs.getDate("pro_entry_date");
 
             return new Product(proId, proName, proQuantity, proCaducity, proEntryDate);

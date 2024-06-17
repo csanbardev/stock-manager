@@ -15,19 +15,28 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts() {
         return productService.getAll();
     }
 
     @GetMapping("/products/caducity/{caducity}")
-    public List<Product> getProductsByCaducity(@PathVariable String caducity){return productService.getByCaducity(caducity);}
+    public List<Product> getProductsByCaducity(@PathVariable String caducity) {
+        return productService.getByCaducity(caducity);
+    }
 
     @GetMapping("/products/quantity/{quantity}")
-    public List<Product> getProductsByQuantity(@PathVariable String quantity){return productService.getByQuantity(quantity);}
+    public List<Product> getProductsByQuantity(@PathVariable String quantity) {
+        return productService.getByQuantity(quantity);
+    }
 
     @PostMapping("/products")
-    public long addProduct(@RequestBody Product product){
+    public long addProduct(@RequestBody Product product) {
         return productService.createProduct(product);
+    }
+
+    @PatchMapping("/products/{id}")
+    public boolean updateProduct(@RequestBody Product product, @PathVariable String id) {
+        return productService.updateProduct(product, id);
     }
 
 
