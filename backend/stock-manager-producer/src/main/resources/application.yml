@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: stock-manager-producer
+datasource:
+  my-connection:
+    jdbc-url: jdbc:mariadb://localhost:3307/des_stock_manager
+    username: root
+    password: root
+    maximum-pool-size: 10
+    pool-name: "crud-pool"
+    auto-commit: true
+
