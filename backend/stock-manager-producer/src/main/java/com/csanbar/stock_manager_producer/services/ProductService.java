@@ -25,4 +25,8 @@ public class ProductService {
     public List<Product> getByCaducity(String caducity) {
         return repository.getAllByCaducity(caducity);
     }
+
+    public List<Product> getByQuantity(String quantity) {
+        return repository.getAllByQuantity(quantity);
+    }
 }

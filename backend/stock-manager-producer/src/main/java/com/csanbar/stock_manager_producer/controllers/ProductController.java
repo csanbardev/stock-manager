@@ -22,6 +22,9 @@ public class ProductController {
     @GetMapping("/products/caducity/{caducity}")
     public List<Product> getProductsByCaducity(@PathVariable String caducity){return productService.getByCaducity(caducity);}
 
+    @GetMapping("/products/quantity/{quantity}")
+    public List<Product> getProductsByQuantity(@PathVariable String quantity){return productService.getByQuantity(quantity);}
+
     @PostMapping("/products")
     public long addProduct(@RequestBody Product product){
         return productService.createProduct(product);

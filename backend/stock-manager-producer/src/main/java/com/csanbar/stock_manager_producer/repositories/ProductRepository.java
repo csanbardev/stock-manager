@@ -47,6 +47,13 @@ public class ProductRepository {
         return namedParameterJdbcTemplate.query(sql, params, mapper);
     }
 
+    public List<Product> getAllByQuantity(String quantity) {
+        String sql = "SELECT * FROM "+table+" WHERE pro_quantity <= :quantity";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("quantity", quantity);
+        return namedParameterJdbcTemplate.query(sql, params, mapper);
+    }
+
     private static class ProductMapper implements RowMapper<Product> {
 
         @Override
