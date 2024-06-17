@@ -21,4 +21,8 @@ public class ProductService {
     public long createProduct(Product product) {
         return repository.createProduct(product);
     }
+
+    public List<Product> getByCaducity(String caducity) {
+        return repository.getAllByCaducity(caducity);
+    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 public class ProductRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final SimpleJdbcInsert insert;
-    private final RecipeMapper mapper = new RecipeMapper();
+    private final ProductMapper mapper = new ProductMapper();
     private final String table = "t_products";
 
     public ProductRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate, DataSource dataSource) {
@@ -40,7 +40,14 @@ public class ProductRepository {
         ).longValue();
     }
 
-    private static class RecipeMapper implements RowMapper<Product> {
+    public List<Product> getAllByCaducity(String caducity) {
+        String sql = "SELECT * FROM "+table+" WHERE abs(datediff(curdate(), pro_caducity)) <= :caducity";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("caducity", caducity);
+        return namedParameterJdbcTemplate.query(sql, params, mapper);
+    }
+
+    private static class ProductMapper implements RowMapper<Product> {
 
         @Override
         public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
