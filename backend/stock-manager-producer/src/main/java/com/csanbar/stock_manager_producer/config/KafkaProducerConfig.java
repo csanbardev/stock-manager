@@ -2,7 +2,6 @@ package com.csanbar.stock_manager_producer.config;
 
 
 import com.csanbar.stock_manager_producer.events.Event;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.awt.dnd.DropTargetDropEvent;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
-    private final String bootstrapAdress = "localhost:9092";
+    private final String bootstrapAdress = "localhost:29092";
 
     @Bean
     public ProducerFactory<String, Event<?>> producerFactory() {
