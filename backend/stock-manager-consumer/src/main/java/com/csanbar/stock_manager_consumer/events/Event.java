@@ -21,7 +21,8 @@ import java.util.Date;
 )
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ProductCreatedEvent.class, name = "CREATED"),
-        @JsonSubTypes.Type(value = ProductUpdatedEvent.class, name = "UPDATED")
+        @JsonSubTypes.Type(value = ProductUpdatedEvent.class, name = "UPDATED"),
+        @JsonSubTypes.Type(value = ProductUpdatedEvent.class, name = "DELETED")
 })
 public abstract class Event <T> {
     private String id;

@@ -2,6 +2,7 @@ package com.csanbar.stock_manager_consumer.services.events;
 
 import com.csanbar.stock_manager_consumer.events.Event;
 import com.csanbar.stock_manager_consumer.events.product.ProductCreatedEvent;
+import com.csanbar.stock_manager_consumer.events.product.ProductDeletedEvent;
 import com.csanbar.stock_manager_consumer.events.product.ProductUpdatedEvent;
 import com.csanbar.stock_manager_consumer.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,8 +40,10 @@ public class ProductEventService {
             }else if(productEvent instanceof ProductUpdatedEvent productUpdatedEvent) {
                 boolean updatedEvent = productService.updateProduct(productUpdatedEvent.getData());
                 log.info("Updated state: {}",updatedEvent);
-            }
-            else {
+            } else if (productEvent instanceof ProductDeletedEvent productDeletedEvent) {
+                boolean deletedEvent = productService.deleteProduct(productDeletedEvent.getData());
+                log.info("Deleted state: {}",deletedEvent);
+            } else {
                 log.warn("Unknown event type: {}", productEvent.getType());
             }
         } catch (Exception e) {

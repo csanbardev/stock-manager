@@ -49,6 +49,20 @@ public class ProductService {
        }
     }
 
+    public boolean deleteProduct(Product product) {
+        try {
+            Product deleted = productRepository.findByProId(product.proId);
+
+            if (deleted != null) {
+                productRepository.delete(deleted);
+                return true;
+            }
+            return false;
+        }catch (Error error){
+            return false;
+        }
+    }
+
     public List<Product> getByCaducity(int caducity) {
         Date fechaLimite = new Date(System.currentTimeMillis() + (caducity * 24 * 60 * 60 * 1000));
         return productRepository.findByProCaducityBefore(fechaLimite);
