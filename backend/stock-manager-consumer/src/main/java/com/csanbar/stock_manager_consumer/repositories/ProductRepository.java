@@ -12,6 +12,8 @@ import java.util.List;
 public interface ProductRepository extends MongoRepository<Product, Integer> {
     Product findByProId(long id);
 
+    Product findByProName(String proName);
+
     List<Product> findByProCaducityBefore(Date fechaLimite);
 
     List<Product> findByProQuantityIsLessThanEqual(int quantity);

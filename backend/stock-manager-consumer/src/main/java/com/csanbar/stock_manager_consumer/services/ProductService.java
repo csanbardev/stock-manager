@@ -31,7 +31,36 @@ public class ProductService {
     }
 
     public boolean updateProduct(Product product) {
-        return false;
+       try {
+           Product updated = productRepository.findByProId(product.proId);
+
+           if (updated != null) {
+               product.setProName(product.proName);
+               product.setProCaducity(product.proCaducity);
+               product.setProQuantity(product.proQuantity);
+               product.setProEntryDate(product.proEntryDate);
+
+               productRepository.save(product);
+               return true;
+           }
+           return false;
+       }catch (Error error){
+           return false;
+       }
+    }
+
+    public boolean deleteProduct(Product product) {
+        try {
+            Product deleted = productRepository.findByProId(product.proId);
+
+            if (deleted != null) {
+                productRepository.delete(deleted);
+                return true;
+            }
+            return false;
+        }catch (Error error){
+            return false;
+        }
     }
 
     public List<Product> getByCaducity(int caducity) {
