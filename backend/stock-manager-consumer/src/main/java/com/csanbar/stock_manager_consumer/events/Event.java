@@ -2,6 +2,7 @@ package com.csanbar.stock_manager_consumer.events;
 
 
 import com.csanbar.stock_manager_consumer.events.product.ProductCreatedEvent;
+import com.csanbar.stock_manager_consumer.events.product.ProductUpdatedEvent;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
@@ -19,7 +20,8 @@ import java.util.Date;
         property = "type"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = ProductCreatedEvent.class, name = "CREATED")
+        @JsonSubTypes.Type(value = ProductCreatedEvent.class, name = "CREATED"),
+        @JsonSubTypes.Type(value = ProductUpdatedEvent.class, name = "UPDATED")
 })
 public abstract class Event <T> {
     private String id;

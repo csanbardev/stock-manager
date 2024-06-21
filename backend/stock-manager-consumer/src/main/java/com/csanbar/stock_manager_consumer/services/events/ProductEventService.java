@@ -2,6 +2,7 @@ package com.csanbar.stock_manager_consumer.services.events;
 
 import com.csanbar.stock_manager_consumer.events.Event;
 import com.csanbar.stock_manager_consumer.events.product.ProductCreatedEvent;
+import com.csanbar.stock_manager_consumer.events.product.ProductUpdatedEvent;
 import com.csanbar.stock_manager_consumer.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,11 @@ public class ProductEventService {
                 log.info("Received Product ... with id={}, data={}",
                         productCreatedEvent.getId(),
                         productCreatedEvent.getData().toString());
-            } else {
+            }else if(productEvent instanceof ProductUpdatedEvent productUpdatedEvent) {
+                boolean updatedEvent = productService.updateProduct(productUpdatedEvent.getData());
+                log.info("Updated state: {}",updatedEvent);
+            }
+            else {
                 log.warn("Unknown event type: {}", productEvent.getType());
             }
         } catch (Exception e) {
