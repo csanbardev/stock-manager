@@ -1,7 +1,8 @@
-package com.csanbar.stock_manager_consumer.services;
+package com.csanbar.stock_manager_consumer.services.events;
 
 import com.csanbar.stock_manager_consumer.events.Event;
-import com.csanbar.stock_manager_consumer.events.ProductCreatedEvent;
+import com.csanbar.stock_manager_consumer.events.product.ProductCreatedEvent;
+import com.csanbar.stock_manager_consumer.services.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

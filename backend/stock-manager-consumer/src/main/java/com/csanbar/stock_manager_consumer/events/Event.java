@@ -1,6 +1,7 @@
 package com.csanbar.stock_manager_consumer.events;
 
 
+import com.csanbar.stock_manager_consumer.events.product.ProductCreatedEvent;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
