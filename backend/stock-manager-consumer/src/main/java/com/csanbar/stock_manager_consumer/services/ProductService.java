@@ -35,12 +35,12 @@ public class ProductService {
            Product updated = productRepository.findByProId(product.proId);
 
            if (updated != null) {
-               product.setProName(product.proName);
-               product.setProCaducity(product.proCaducity);
-               product.setProQuantity(product.proQuantity);
-               product.setProEntryDate(product.proEntryDate);
+               updated.setProName(product.proName);
+               updated.setProCaducity(product.proCaducity);
+               updated.setProQuantity(product.proQuantity);
+               updated.setProEntryDate(product.proEntryDate);
 
-               productRepository.save(product);
+               productRepository.save(updated);
                return true;
            }
            return false;
