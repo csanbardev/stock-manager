@@ -2,7 +2,7 @@ package com.csanbar.stock_manager_producer.services;
 
 import com.csanbar.stock_manager_producer.models.Product;
 import com.csanbar.stock_manager_producer.repositories.ProductRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.csanbar.stock_manager_producer.services.events.ProductEventsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

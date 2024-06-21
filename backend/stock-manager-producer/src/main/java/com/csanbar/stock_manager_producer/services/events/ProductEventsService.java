@@ -1,9 +1,9 @@
-package com.csanbar.stock_manager_producer.services;
+package com.csanbar.stock_manager_producer.services.events;
 
 
 import com.csanbar.stock_manager_producer.events.Event;
 import com.csanbar.stock_manager_producer.events.EventType;
-import com.csanbar.stock_manager_producer.events.ProductCreatedEvent;
+import com.csanbar.stock_manager_producer.events.product.ProductCreatedEvent;
 import com.csanbar.stock_manager_producer.models.Product;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
