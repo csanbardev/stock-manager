@@ -69,6 +69,15 @@ public class ProductRepository {
 
     }
 
+    public boolean deleteProduct(String id) {
+        String sql = "DELETE from " + table + " WHERE pro_id = :id";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+
+        int rowsAffected = namedParameterJdbcTemplate.update(sql, params);
+        return rowsAffected > 0;
+    }
+
     private static class ProductMapper implements RowMapper<Product> {
 
         @Override

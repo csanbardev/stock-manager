@@ -2,7 +2,7 @@ package com.csanbar.stock_manager_producer.services;
 
 import com.csanbar.stock_manager_producer.models.Product;
 import com.csanbar.stock_manager_producer.repositories.ProductRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.csanbar.stock_manager_producer.services.events.ProductEventsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +23,10 @@ public class ProductService {
     }
 
     public long createProduct(Product product) {
+        long proId = repository.createProduct(product);
+        product.pro_id = proId;
         this.productEventsService.publish(product);
-        return repository.createProduct(product);
+        return proId;
     }
 
     public List<Product> getByCaducity(String caducity) {
@@ -36,6 +38,18 @@ public class ProductService {
     }
 
     public boolean updateProduct(Product product, String id) {
+        product.pro_id = Long.parseLong(id);
+        this.productEventsService.update(product);
         return repository.updateProduct(product, id);
+    }
+
+    public boolean deleteProduct(String id) {
+        boolean deleted = repository.deleteProduct(id);
+
+        if (deleted) {
+            this.productEventsService.delete(new Product(Long.parseLong(id)));
+            return true;
+        }
+        return false;
     }
 }
