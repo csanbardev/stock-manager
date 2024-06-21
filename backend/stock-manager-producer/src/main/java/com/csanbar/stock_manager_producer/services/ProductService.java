@@ -23,8 +23,10 @@ public class ProductService {
     }
 
     public long createProduct(Product product) {
+        long proId = repository.createProduct(product);
+        product.pro_id = proId;
         this.productEventsService.publish(product);
-        return repository.createProduct(product);
+        return proId;
     }
 
     public List<Product> getByCaducity(String caducity) {
@@ -36,6 +38,8 @@ public class ProductService {
     }
 
     public boolean updateProduct(Product product, String id) {
+        product.pro_id = Long.parseLong(id);
+        this.productEventsService.update(product);
         return repository.updateProduct(product, id);
     }
 }

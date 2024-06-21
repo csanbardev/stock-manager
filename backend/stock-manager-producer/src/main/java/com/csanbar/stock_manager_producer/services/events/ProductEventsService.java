@@ -4,6 +4,7 @@ package com.csanbar.stock_manager_producer.services.events;
 import com.csanbar.stock_manager_producer.events.Event;
 import com.csanbar.stock_manager_producer.events.EventType;
 import com.csanbar.stock_manager_producer.events.product.ProductCreatedEvent;
+import com.csanbar.stock_manager_producer.events.product.ProductUpdatedEvent;
 import com.csanbar.stock_manager_producer.models.Product;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -34,5 +35,16 @@ public class ProductEventsService {
         created.setDate(new Date());
 
         this.producer.send(topicProduct, created);
+    }
+
+    public void update(Product product){
+        ProductUpdatedEvent updated = new ProductUpdatedEvent();
+
+        updated.setData(product);
+        updated.setId(UUID.randomUUID().toString());
+        updated.setType(EventType.UPDATED);
+        updated.setDate(new Date());
+
+        this.producer.send(topicProduct, updated);
     }
 }
