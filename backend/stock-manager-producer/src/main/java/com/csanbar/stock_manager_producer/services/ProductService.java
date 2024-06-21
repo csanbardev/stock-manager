@@ -42,4 +42,14 @@ public class ProductService {
         this.productEventsService.update(product);
         return repository.updateProduct(product, id);
     }
+
+    public boolean deleteProduct(String id) {
+        boolean deleted = repository.deleteProduct(id);
+
+        if (deleted) {
+            this.productEventsService.delete(new Product(Long.parseLong(id)));
+            return true;
+        }
+        return false;
+    }
 }

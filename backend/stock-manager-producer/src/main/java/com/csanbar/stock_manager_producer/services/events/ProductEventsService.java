@@ -4,6 +4,7 @@ package com.csanbar.stock_manager_producer.services.events;
 import com.csanbar.stock_manager_producer.events.Event;
 import com.csanbar.stock_manager_producer.events.EventType;
 import com.csanbar.stock_manager_producer.events.product.ProductCreatedEvent;
+import com.csanbar.stock_manager_producer.events.product.ProductDeletedEvent;
 import com.csanbar.stock_manager_producer.events.product.ProductUpdatedEvent;
 import com.csanbar.stock_manager_producer.models.Product;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,5 +47,16 @@ public class ProductEventsService {
         updated.setDate(new Date());
 
         this.producer.send(topicProduct, updated);
+    }
+
+    public void delete(Product product){
+        ProductDeletedEvent deleted = new ProductDeletedEvent();
+
+        deleted.setData(product);
+        deleted.setId(UUID.randomUUID().toString());
+        deleted.setType(EventType.DELETED);
+        deleted.setDate(new Date());
+
+        this.producer.send(topicProduct, deleted);
     }
 }
