@@ -27,6 +27,9 @@ public class Product {
     @JsonProperty("pro_entry_date")
     public Date proEntryDate;
 
+    public Product() {
+    }
+
     public Product(long proId, String proName, int proQuantity, Date proCaducity, Date proEntryDate) {
         this.id = new ObjectId();
         this.proId = proId;

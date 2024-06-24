@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -70,6 +71,15 @@ public class ProductService {
 
     public List<Product> getByQuantity(String quantity) {
         return productRepository.findByProQuantityIsLessThanEqual(Integer.parseInt(quantity));
+    }
+
+    public List<Product> getAllProductsById(List<Product> productList) {
+        List<Long> proIds = productList.stream()
+                .map(Product::getProId)
+                .collect(Collectors.toList());
+
+        List<Product> products = productRepository.findAllByProIdIn(proIds);
+        return products;
     }
 }
 
