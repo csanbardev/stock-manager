@@ -1,5 +1,7 @@
 package com.csanbar.stock_manager_consumer.models;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,10 +15,11 @@ import java.util.Date;
 @Getter
 @Setter
 @Document(collection = "t_products")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
     @Id
     private ObjectId id;
-    @JsonProperty("pro_id")
+    @JsonAlias({ "pro_id", "spr_pro_id" })
     public long proId;
     @JsonProperty("pro_name")
     public String proName;
