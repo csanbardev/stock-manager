@@ -22,4 +22,9 @@ public class SupplierController {
     public boolean deleteSupplier(@PathVariable String id) {
         return supplierService.deleteSupplier(id);
     }
+
+    @DeleteMapping("suppliers/product/{id}/{product}")
+    public boolean deleteProduct(@PathVariable String id, @PathVariable String product) {
+        return supplierService.deleteProduct(id, product);
+    }
 }

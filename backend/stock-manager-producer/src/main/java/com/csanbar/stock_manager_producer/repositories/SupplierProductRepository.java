@@ -36,4 +36,14 @@ public class SupplierProductRepository {
         MapSqlParameterSource[] batch = batchArgs.toArray(new MapSqlParameterSource[0]);
         namedParameterJdbcTemplate.batchUpdate(sql, batch);
     }
+
+    public boolean deleteProduct(String id, String product) {
+        String sql = "DELETE from " + table + " WHERE spr_sup_id = :id and spr_pro_id = :product";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+        params.addValue("product", product);
+
+        int rowsAffected = namedParameterJdbcTemplate.update(sql, params);
+        return rowsAffected > 0;
+    }
 }
