@@ -29,6 +29,28 @@ public class SupplierService {
         }
     }
 
+    public boolean updateSupplier(Supplier supplier) {
+        try {
+            Supplier updated = supplierRepository.findBySupId(supplier.supId);
+
+            if (updated != null) {
+                updated.setSupName(supplier.supName);
+                updated.setSupDetails(supplier.supDetails);
+
+                if(!supplier.productList.isEmpty()){
+                    updated.getProductList().removeIf(product -> product.proId == supplier.getProductList().get(0).proId);
+                }
+
+                supplierRepository.save(updated);
+                return true;
+            }
+            return false;
+        }catch (Error error){
+            return false;
+        }
+    }
+
+
     public boolean deleteSupplier(Supplier supplier) {
         try {
             Supplier deleted = supplierRepository.findBySupId(supplier.supId);
