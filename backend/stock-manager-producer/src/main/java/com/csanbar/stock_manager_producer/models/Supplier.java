@@ -7,4 +7,7 @@ public class Supplier {
     public String sup_name;
     public String sup_details;
     public List<SupplierProduct> supplierProductList;
+
+    public Supplier(long l) {
+    }
 }

@@ -3,6 +3,7 @@ package com.csanbar.stock_manager_producer.services.events;
 import com.csanbar.stock_manager_producer.events.Event;
 import com.csanbar.stock_manager_producer.events.EventType;
 import com.csanbar.stock_manager_producer.events.supplier.SupplierCreatedEvent;
+import com.csanbar.stock_manager_producer.events.supplier.SupplierDeletedEvent;
 import com.csanbar.stock_manager_producer.models.Supplier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -33,5 +34,16 @@ public class SupplierEventsService {
         created.setDate(new Date());
 
         this.producer.send(topicProduct, created);
+    }
+
+    public void delete(Supplier supplier){
+        SupplierDeletedEvent deleted = new SupplierDeletedEvent();
+
+        deleted.setData(supplier);
+        deleted.setId(UUID.randomUUID().toString());
+        deleted.setType(EventType.DELETED);
+        deleted.setDate(new Date());
+
+        this.producer.send(topicProduct, deleted);
     }
 }

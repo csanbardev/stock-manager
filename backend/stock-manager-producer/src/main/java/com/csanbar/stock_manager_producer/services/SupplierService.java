@@ -37,6 +37,18 @@ public class SupplierService {
     }
 
     public boolean deleteSupplier(String id) {
-        return supplierRepository.deleteSupplier(id);
+        try {
+
+        boolean deleted = supplierRepository.deleteSupplier(id);
+
+        if(deleted){
+            supplierEventsService.delete(new Supplier(Long.parseLong(id)));
+            return true;
+        }
+
+        return false;
+        }catch (Error error){
+            throw error;
+        }
     }
 }
