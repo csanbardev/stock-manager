@@ -35,4 +35,8 @@ public class SupplierService {
 
 
     }
+
+    public boolean deleteSupplier(String id) {
+        return supplierRepository.deleteSupplier(id);
+    }
 }

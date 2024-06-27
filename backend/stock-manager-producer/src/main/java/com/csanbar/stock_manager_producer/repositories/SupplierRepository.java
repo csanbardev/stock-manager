@@ -31,4 +31,12 @@ public class SupplierRepository {
         }
     }
 
+    public boolean deleteSupplier(String id) {
+        String sql = "DELETE from " + table + " WHERE sup_id = :id";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+
+        int rowsAffected = namedParameterJdbcTemplate.update(sql, params);
+        return rowsAffected > 0;
+    }
 }
