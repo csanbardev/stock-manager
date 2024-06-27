@@ -28,4 +28,18 @@ public class SupplierService {
             return false;
         }
     }
+
+    public boolean deleteSupplier(Supplier supplier) {
+        try {
+            Supplier deleted = supplierRepository.findBySupId(supplier.supId);
+
+            if (deleted != null) {
+                supplierRepository.delete(deleted);
+                return true;
+            }
+            return false;
+        }catch (Error error){
+            return false;
+        }
+    }
 }

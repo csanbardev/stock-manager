@@ -2,6 +2,7 @@ package com.csanbar.stock_manager_consumer.services.events;
 
 import com.csanbar.stock_manager_consumer.events.Event;
 import com.csanbar.stock_manager_consumer.events.suplier.SupplierCreatedEvent;
+import com.csanbar.stock_manager_consumer.events.suplier.SupplierDeletedEvent;
 import com.csanbar.stock_manager_consumer.services.SupplierService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,9 @@ public class SupplierEventService {
                 log.info("SupplierCreatedEvent received .... id{}, data={}",
                         supplierCreatedEvent.getId(),
                         supplierCreatedEvent.getData().toString());
+            }else if(suplierEvent instanceof SupplierDeletedEvent supplierDeletedEvent){
+                supplierService.deleteSupplier(supplierDeletedEvent.getData());
+                log.info("Supplier deleted....");
             }
         } catch (Exception error) {
             log.error("Error processing event: " + event, error);
