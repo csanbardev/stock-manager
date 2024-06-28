@@ -17,4 +17,6 @@ public interface ProductRepository extends MongoRepository<Product, Integer> {
     List<Product> findByProCaducityBefore(Date fechaLimite);
 
     List<Product> findByProQuantityIsLessThanEqual(int quantity);
+
+    List<Product> findAllByProIdIn(List<Long> proIds);
 }
