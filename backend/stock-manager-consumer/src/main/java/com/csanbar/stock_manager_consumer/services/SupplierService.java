@@ -37,7 +37,7 @@ public class SupplierService {
                 updated.setSupName(supplier.supName);
                 updated.setSupDetails(supplier.supDetails);
 
-                if(!supplier.productList.isEmpty()){
+                if (!supplier.productList.isEmpty()) {
                     updated.getProductList().removeIf(product -> product.proId == supplier.getProductList().get(0).proId);
                 }
 
@@ -45,7 +45,7 @@ public class SupplierService {
                 return true;
             }
             return false;
-        }catch (Error error){
+        } catch (Error error) {
             return false;
         }
     }
@@ -60,8 +60,12 @@ public class SupplierService {
                 return true;
             }
             return false;
-        }catch (Error error){
+        } catch (Error error) {
             return false;
         }
+    }
+
+    public List<Supplier> getAllSuppliers() {
+        return supplierRepository.findAll();
     }
 }
