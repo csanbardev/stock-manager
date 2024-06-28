@@ -68,4 +68,8 @@ public class SupplierService {
     public List<Supplier> getAllSuppliers() {
         return supplierRepository.findAll();
     }
+
+    public List<Supplier> getAllSuppliersByProductId(String id) {
+        return supplierRepository.findByProductListProId(Long.parseLong(id));
+    }
 }
