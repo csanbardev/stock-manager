@@ -4,6 +4,7 @@ package com.csanbar.stock_manager_consumer.events;
 import com.csanbar.stock_manager_consumer.events.product.ProductCreatedEvent;
 import com.csanbar.stock_manager_consumer.events.product.ProductDeletedEvent;
 import com.csanbar.stock_manager_consumer.events.product.ProductUpdatedEvent;
+import com.csanbar.stock_manager_consumer.events.purchase.PurchaseCreatedEvent;
 import com.csanbar.stock_manager_consumer.events.suplier.SupplierCreatedEvent;
 import com.csanbar.stock_manager_consumer.events.suplier.SupplierDeletedEvent;
 import com.csanbar.stock_manager_consumer.events.suplier.SupplierUpdatedEvent;
@@ -29,7 +30,8 @@ import java.util.Date;
         @JsonSubTypes.Type(value = ProductDeletedEvent.class, name = "PRODUCT_DELETED"),
         @JsonSubTypes.Type(value = SupplierCreatedEvent.class, name = "SUPPLIER_CREATED"),
         @JsonSubTypes.Type(value = SupplierDeletedEvent.class, name = "SUPPLIER_DELETED"),
-        @JsonSubTypes.Type(value = SupplierUpdatedEvent.class, name = "SUPPLIER_UPDATED")
+        @JsonSubTypes.Type(value = SupplierUpdatedEvent.class, name = "SUPPLIER_UPDATED"),
+        @JsonSubTypes.Type(value = PurchaseCreatedEvent.class, name = "PURCHASE_CREATED")
 })
 public abstract class Event <T> {
     private String id;
