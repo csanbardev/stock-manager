@@ -15,6 +15,9 @@ import java.util.UUID;
 public class PurchaseEventsService {
     private KafkaTemplate<String, Event<?>> producer;
 
+    public PurchaseEventsService(KafkaTemplate<String, Event<?>> producer) {
+        this.producer = producer;
+    }
 
     @Value("${topic.purchase.name:purchases}")
     private String topicProduct;
