@@ -24,12 +24,12 @@ import java.util.Date;
         property = "type"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = ProductCreatedEvent.class, name = "CREATED"),
-        @JsonSubTypes.Type(value = ProductUpdatedEvent.class, name = "UPDATED"),
-        @JsonSubTypes.Type(value = ProductDeletedEvent.class, name = "DELETED"),
-        @JsonSubTypes.Type(value = SupplierCreatedEvent.class, name = "CREATED"),
-        @JsonSubTypes.Type(value = SupplierDeletedEvent.class, name = "DELETED"),
-        @JsonSubTypes.Type(value = SupplierUpdatedEvent.class, name = "UPDATED")
+        @JsonSubTypes.Type(value = ProductCreatedEvent.class, name = "PRODUCT_CREATED"),
+        @JsonSubTypes.Type(value = ProductUpdatedEvent.class, name = "PRODUCT_UPDATED"),
+        @JsonSubTypes.Type(value = ProductDeletedEvent.class, name = "PRODUCT_DELETED"),
+        @JsonSubTypes.Type(value = SupplierCreatedEvent.class, name = "SUPPLIER_CREATED"),
+        @JsonSubTypes.Type(value = SupplierDeletedEvent.class, name = "SUPPLIER_DELETED"),
+        @JsonSubTypes.Type(value = SupplierUpdatedEvent.class, name = "SUPPLIER_UPDATED")
 })
 public abstract class Event <T> {
     private String id;

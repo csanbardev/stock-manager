@@ -33,7 +33,7 @@ public class SupplierEventsService {
 
         created.setData(supplier);
         created.setId(UUID.randomUUID().toString());
-        created.setType(EventType.CREATED);
+        created.setType(EventType.SUPPLIER_CREATED);
         created.setDate(new Date());
 
         this.producer.send(topicProduct, created);
@@ -44,7 +44,7 @@ public class SupplierEventsService {
 
         updated.setData(supplier);
         updated.setId(UUID.randomUUID().toString());
-        updated.setType(EventType.UPDATED);
+        updated.setType(EventType.SUPPLIER_UPDATED);
         updated.setDate(new Date());
 
         this.producer.send(topicProduct, updated);
@@ -55,7 +55,7 @@ public class SupplierEventsService {
 
         deleted.setData(supplier);
         deleted.setId(UUID.randomUUID().toString());
-        deleted.setType(EventType.DELETED);
+        deleted.setType(EventType.SUPPLIER_DELETED);
         deleted.setDate(new Date());
 
         this.producer.send(topicProduct, deleted);

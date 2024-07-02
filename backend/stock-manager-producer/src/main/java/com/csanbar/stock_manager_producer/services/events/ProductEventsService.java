@@ -32,7 +32,7 @@ public class ProductEventsService {
 
         created.setData(product);
         created.setId(UUID.randomUUID().toString());
-        created.setType(EventType.CREATED);
+        created.setType(EventType.PRODUCT_CREATED);
         created.setDate(new Date());
 
         this.producer.send(topicProduct, created);
@@ -43,7 +43,7 @@ public class ProductEventsService {
 
         updated.setData(product);
         updated.setId(UUID.randomUUID().toString());
-        updated.setType(EventType.UPDATED);
+        updated.setType(EventType.PRODUCT_UPDATED);
         updated.setDate(new Date());
 
         this.producer.send(topicProduct, updated);
@@ -54,7 +54,7 @@ public class ProductEventsService {
 
         deleted.setData(product);
         deleted.setId(UUID.randomUUID().toString());
-        deleted.setType(EventType.DELETED);
+        deleted.setType(EventType.PRODUCT_DELETED);
         deleted.setDate(new Date());
 
         this.producer.send(topicProduct, deleted);
