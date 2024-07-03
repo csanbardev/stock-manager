@@ -35,7 +35,6 @@ public class ProductPurchaseRepository {
                 params.addValue("prp_sup_id", productPurchase.prp_sup_id);
                 params.addValue("prp_quantity", productPurchase.prp_quantity);
                 params.addValue("prp_estimate_date", productPurchase.prp_estimate_date);
-                params.addValue("prp_status", productPurchase.prp_status);
                 batchArgs.add(params);
             }
 
