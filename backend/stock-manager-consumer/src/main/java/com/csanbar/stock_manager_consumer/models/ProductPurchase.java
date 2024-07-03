@@ -23,6 +23,8 @@ public class ProductPurchase {
     public int prpQuantity;
     @JsonProperty("prp_estimate_date")
     public Date prpEstimateDate;
+    public Product product;
+    public Supplier supplier;
 
 
 }
