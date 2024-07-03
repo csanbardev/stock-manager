@@ -1,6 +1,6 @@
 package com.csanbar.stock_manager_producer.services;
 
-import com.csanbar.stock_manager_producer.controllers.PurchaseController;
+import com.csanbar.stock_manager_producer.models.ProductPurchase;
 import com.csanbar.stock_manager_producer.models.Purchase;
 import com.csanbar.stock_manager_producer.repositories.ProductPurchaseRepository;
 import com.csanbar.stock_manager_producer.repositories.PurchaseRepository;
@@ -32,5 +32,9 @@ public class PurchaseService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean updateStatus(long id, long product, ProductPurchase productPurchase) {
+        return productPurchaseRepository.updateStatus(id, product, productPurchase);
     }
 }
