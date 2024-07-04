@@ -25,7 +25,7 @@ public class ProductPurchaseRepository {
 
     public void assignPurchases(List<ProductPurchase> productList, long created) {
         try {
-            String sql = "INSERT INTO " + table + " (prp_pur_id, prp_pro_id, prp_sup_id, prp_quantity, prp_estimate_date, prp_status) VALUES (:prp_pur_id, :prp_pro_id, :prp_sup_id, :prp_quantity, :prp_estimate_date, :prp_status)";
+            String sql = "INSERT INTO " + table + " (prp_pur_id, prp_pro_id, prp_sup_id, prp_quantity, prp_estimate_date) VALUES (:prp_pur_id, :prp_pro_id, :prp_sup_id, :prp_quantity, :prp_estimate_date)";
             List<MapSqlParameterSource> batchArgs = new ArrayList<>();
 
             for (ProductPurchase productPurchase : productList) {

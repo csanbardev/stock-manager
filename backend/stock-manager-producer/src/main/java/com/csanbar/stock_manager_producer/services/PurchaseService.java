@@ -7,6 +7,9 @@ import com.csanbar.stock_manager_producer.repositories.PurchaseRepository;
 import com.csanbar.stock_manager_producer.services.events.PurchaseEventsService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class PurchaseService {
     private final PurchaseRepository purchaseRepository;
@@ -35,6 +38,23 @@ public class PurchaseService {
     }
 
     public boolean updateStatus(long id, long product, ProductPurchase productPurchase) {
-        return productPurchaseRepository.updateStatus(id, product, productPurchase);
+        try {
+            boolean updated = productPurchaseRepository.updateStatus(id, product, productPurchase);
+
+            if(updated){
+                Purchase updatedPurchase = new Purchase();
+                updatedPurchase.pur_id = id;
+                productPurchase.prp_pro_id = product;
+                List<ProductPurchase> updatedProductList = new ArrayList<>();
+                updatedProductList.add(productPurchase);
+                updatedPurchase.productList = updatedProductList;
+
+                purchaseEventsService.update(updatedPurchase);
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

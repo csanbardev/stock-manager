@@ -13,4 +13,7 @@ public class Purchase {
         this.pur_date = pur_date;
         this.productList = productList;
     }
+
+    public Purchase() {
+    }
 }
