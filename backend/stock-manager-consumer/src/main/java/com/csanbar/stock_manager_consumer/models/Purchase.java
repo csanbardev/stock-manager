@@ -8,7 +8,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -19,9 +20,9 @@ public class Purchase {
     @Id
     private ObjectId id;
     @JsonProperty("pur_id")
-    public long pur_id;
+    public long purId;
     @JsonProperty("pur_date")
-    public Date pur_date;
+    public Date purDate;
     @JsonProperty("productList")
     public List<ProductPurchase> productList;
 }

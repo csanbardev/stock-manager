@@ -1,12 +1,13 @@
 package com.csanbar.stock_manager_consumer.services;
 
 import com.csanbar.stock_manager_consumer.models.Product;
+import com.csanbar.stock_manager_consumer.models.ProductPurchase;
 import com.csanbar.stock_manager_consumer.models.Purchase;
 import com.csanbar.stock_manager_consumer.models.Supplier;
 import com.csanbar.stock_manager_consumer.repositories.PurchaseRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,5 +44,37 @@ public class PurchaseService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void updatePurchase(Purchase purchase) {
+        Purchase updated = purchaseRepository.findByPurId(purchase.purId);
+
+        if (updated == null) {
+            throw new RuntimeException("Purchase not exists");
+        }
+
+        if (!purchase.productList.isEmpty()) {
+            updated.productList = updateProductList(updated.productList, purchase.productList);
+        }
+
+        purchaseRepository.save(updated);
+
+
+    }
+
+    public List<ProductPurchase> updateProductList(List<ProductPurchase> original, List<ProductPurchase> updated) {
+        Map<Long, ProductPurchase> originalMap = new HashMap<>();
+        for (ProductPurchase originalProduct : original) {
+            originalMap.put(originalProduct.getPrpProId(), originalProduct);
+        }
+
+        for (ProductPurchase updatedProduct : updated) {
+            ProductPurchase originalProduct = originalMap.get(updatedProduct.getPrpProId());
+            if (originalProduct != null) {
+                originalProduct.setPrpStatus(updatedProduct.getPrpStatus() != null ? updatedProduct.getPrpStatus() : originalProduct.getPrpStatus());
+            }
+        }
+
+        return original;
     }
 }

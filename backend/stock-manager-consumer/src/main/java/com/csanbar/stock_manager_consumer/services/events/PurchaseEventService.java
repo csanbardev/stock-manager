@@ -2,15 +2,12 @@ package com.csanbar.stock_manager_consumer.services.events;
 
 import com.csanbar.stock_manager_consumer.events.Event;
 import com.csanbar.stock_manager_consumer.events.purchase.PurchaseCreatedEvent;
-import com.csanbar.stock_manager_consumer.events.suplier.SupplierCreatedEvent;
-import com.csanbar.stock_manager_consumer.events.suplier.SupplierDeletedEvent;
-import com.csanbar.stock_manager_consumer.events.suplier.SupplierUpdatedEvent;
+import com.csanbar.stock_manager_consumer.events.purchase.PurchaseUpdatedEvent;
 import com.csanbar.stock_manager_consumer.services.PurchaseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Slf4j
 @Component
@@ -37,6 +34,11 @@ public class PurchaseEventService {
                 log.info("PurchaseCreatedEvent received .... id{}, data={}",
                         purchaseCreatedEvent.getId(),
                         purchaseCreatedEvent.getData().toString());
+            }else if(purchaseEvent instanceof PurchaseUpdatedEvent purchaseUpdatedEvent) {
+                purchaseService.updatePurchase(purchaseUpdatedEvent.getData());
+                log.info("PurchaseUpdatedEvent received .... id{}, data={}",
+                        purchaseUpdatedEvent.getId(),
+                        purchaseUpdatedEvent.getData().toString());
             }
         } catch (Exception error) {
             log.error("Error processing event: " + event, error);
