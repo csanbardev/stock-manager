@@ -27,6 +27,7 @@ public class PurchaseService {
         try {
             purchase.setProductList(
                     purchase.getProductList().stream().map(productPurchase -> {
+                        productPurchase.prpPurId = purchase.purId;
                         Optional<Product> productOpt = Optional.ofNullable(productService.getByProId(productPurchase.prpProId));
                         Optional<Supplier> supplierOpt = Optional.ofNullable(supplierService.getSupplierBySupId(productPurchase.prpSupId));
 
