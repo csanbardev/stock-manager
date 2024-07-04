@@ -77,4 +77,21 @@ public class PurchaseService {
 
         return original;
     }
+
+    public List<Product> getProductsByState(Long id, String status) {
+        try {
+            Purchase purchase = purchaseRepository.findByPurId(id);
+            if (purchase == null) {
+                throw new RuntimeException("Purchase not exists");
+            }
+            List<Product> filteredProductPurchases = purchase.productList.stream().filter(
+                    productPurchase -> status.equals(productPurchase.prpStatus)
+            ).map(ProductPurchase::getProduct).toList();
+
+            return productService.getAllProductsById(filteredProductPurchases);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
