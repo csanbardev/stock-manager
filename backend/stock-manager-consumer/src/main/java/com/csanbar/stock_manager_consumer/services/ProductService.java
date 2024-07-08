@@ -68,9 +68,17 @@ public class ProductService {
         }
     }
 
-    public List<Product> getByCaducity(int caducity) {
-        Date fechaLimite = new Date(System.currentTimeMillis() + (caducity * 24 * 60 * 60 * 1000));
-        return productRepository.findByProCaducityBefore(fechaLimite);
+    public PaginatedResponse<Product> getByCaducity(int caducity, int page, int size) {
+        Date limitDate = new Date(System.currentTimeMillis() + (caducity * 24 * 60 * 60 * 1000));
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productRepository.findByProCaducityBefore(limitDate, pageable);
+
+        return new PaginatedResponse<>(
+                productPage.getContent(),
+                productPage.getTotalPages(),
+                productPage.getTotalElements(),
+                productPage.getNumber()
+        );
     }
 
     public PaginatedResponse<Product> getByQuantity(String quantity, int page, int size) {

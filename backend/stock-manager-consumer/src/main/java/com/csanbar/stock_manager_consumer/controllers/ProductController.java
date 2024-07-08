@@ -20,15 +20,17 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/products/caducity/{caducity}")
-    public List<Product> getProductsByCaducity(@PathVariable String caducity) {
-        return productService.getByCaducity(Integer.parseInt(caducity));
+    @GetMapping("/products/caducity")
+    public PaginatedResponse<Product> getProductsByCaducity(@RequestParam int caducity,
+                                                            @RequestParam int page,
+                                                            @RequestParam int size) {
+        return productService.getByCaducity(caducity, page, size);
     }
 
     @GetMapping("/products/quantity")
     public PaginatedResponse<Product> getProductsByQuantity(@RequestParam String quantity,
-                                                   @RequestParam int page,
-                                                   @RequestParam int size) {
+                                                            @RequestParam int page,
+                                                            @RequestParam int size) {
         return productService.getByQuantity(quantity, page, size);
     }
 
