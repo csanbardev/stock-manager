@@ -1,7 +1,11 @@
 package com.csanbar.stock_manager_consumer.services;
 
+import com.csanbar.stock_manager_consumer.models.PaginatedResponse;
 import com.csanbar.stock_manager_consumer.models.Product;
 import com.csanbar.stock_manager_consumer.repositories.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -69,8 +73,16 @@ public class ProductService {
         return productRepository.findByProCaducityBefore(fechaLimite);
     }
 
-    public List<Product> getByQuantity(String quantity) {
-        return productRepository.findByProQuantityIsLessThanEqual(Integer.parseInt(quantity));
+    public PaginatedResponse<Product> getByQuantity(String quantity, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productRepository.findByProQuantityIsLessThanEqual(Integer.parseInt(quantity), pageable);
+
+        return  new PaginatedResponse<>(
+                productPage.getContent(),
+                productPage.getTotalPages(),
+                productPage.getTotalElements(),
+                productPage.getNumber()
+        );
     }
 
     public List<Product> getAllProductsById(List<Product> productList) {

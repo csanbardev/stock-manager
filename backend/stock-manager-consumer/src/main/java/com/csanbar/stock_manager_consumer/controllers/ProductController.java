@@ -1,5 +1,6 @@
 package com.csanbar.stock_manager_consumer.controllers;
 
+import com.csanbar.stock_manager_consumer.models.PaginatedResponse;
 import com.csanbar.stock_manager_consumer.models.Product;
 import com.csanbar.stock_manager_consumer.services.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,11 @@ public class ProductController {
         return productService.getByCaducity(Integer.parseInt(caducity));
     }
 
-    @GetMapping("/products/quantity/{quantity}")
-    public List<Product> getProductsByQuantity(@PathVariable String quantity) {
-        return productService.getByQuantity(quantity);
+    @GetMapping("/products/quantity")
+    public PaginatedResponse<Product> getProductsByQuantity(@RequestParam String quantity,
+                                                   @RequestParam int page,
+                                                   @RequestParam int size) {
+        return productService.getByQuantity(quantity, page, size);
     }
 
     @PostMapping("/products")
