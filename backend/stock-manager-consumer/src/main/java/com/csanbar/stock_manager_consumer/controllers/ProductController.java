@@ -16,23 +16,23 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public PaginatedResponse<Product> getAllProducts(@RequestParam int page,
-                                                     @RequestParam int size
+    public PaginatedResponse<Product> getAllProducts(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "10") int size
     ) {
         return productService.getAllProducts(page, size);
     }
 
     @GetMapping("/products/caducity")
     public PaginatedResponse<Product> getProductsByCaducity(@RequestParam int caducity,
-                                                            @RequestParam int page,
-                                                            @RequestParam int size) {
+                                                            @RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
         return productService.getByCaducity(caducity, page, size);
     }
 
     @GetMapping("/products/quantity")
     public PaginatedResponse<Product> getProductsByQuantity(@RequestParam String quantity,
-                                                            @RequestParam int page,
-                                                            @RequestParam int size) {
+                                                            @RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
         return productService.getByQuantity(quantity, page, size);
     }
 

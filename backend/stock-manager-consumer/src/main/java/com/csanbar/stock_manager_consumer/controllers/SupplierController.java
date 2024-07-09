@@ -20,8 +20,8 @@ public class SupplierController {
     }
 
     @GetMapping("/suppliers")
-    public PaginatedResponse<Supplier> getAllSuppliers(@RequestParam int size,
-                                                       @RequestParam int page
+    public PaginatedResponse<Supplier> getAllSuppliers(@RequestParam(defaultValue = "10") int size,
+                                                       @RequestParam(defaultValue = "0") int page
     ) {
         return this.supplierService.getAllSuppliers(size, page);
     }

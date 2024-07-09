@@ -26,7 +26,7 @@ public class PurchaseController {
     }
 
     @GetMapping("/purchases/state/{id}")
-    public PaginatedResponse<Product> getPurchaseState(@PathVariable Long id, @RequestParam String status, @RequestParam int size, @RequestParam int page) {
+    public PaginatedResponse<Product> getPurchaseState(@PathVariable Long id, @RequestParam String status, @RequestParam(defaultValue = "0") int size, @RequestParam(defaultValue = "10") int page) {
         return purchaseService.getProductsByState(id, status, size, page);
     }
 }
