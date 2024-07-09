@@ -1,8 +1,12 @@
 package com.csanbar.stock_manager_consumer.services;
 
+import com.csanbar.stock_manager_consumer.models.PaginatedResponse;
 import com.csanbar.stock_manager_consumer.models.Product;
 import com.csanbar.stock_manager_consumer.models.Supplier;
 import com.csanbar.stock_manager_consumer.repositories.SupplierRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,8 +69,17 @@ public class SupplierService {
         }
     }
 
-    public List<Supplier> getAllSuppliers() {
-        return supplierRepository.findAll();
+    public PaginatedResponse<Supplier> getAllSuppliers(int size, int page) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Supplier> supplierPage = supplierRepository.findAll(pageable);
+
+        return new PaginatedResponse<>(
+                supplierPage.getContent(),
+                supplierPage.getTotalPages(),
+                supplierPage.getTotalElements(),
+                supplierPage.getNumber()
+        );
     }
 
     public List<Supplier> getAllSuppliersByProductId(String id) {

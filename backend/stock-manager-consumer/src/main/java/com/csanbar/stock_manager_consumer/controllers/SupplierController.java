@@ -1,9 +1,11 @@
 package com.csanbar.stock_manager_consumer.controllers;
 
+import com.csanbar.stock_manager_consumer.models.PaginatedResponse;
 import com.csanbar.stock_manager_consumer.models.Supplier;
 import com.csanbar.stock_manager_consumer.services.SupplierService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,8 +20,10 @@ public class SupplierController {
     }
 
     @GetMapping("/suppliers")
-    public List<Supplier> getAllSuppliers() {
-        return this.supplierService.getAllSuppliers();
+    public PaginatedResponse<Supplier> getAllSuppliers(@RequestParam int size,
+                                                       @RequestParam int page
+    ) {
+        return this.supplierService.getAllSuppliers(size, page);
     }
 
     @GetMapping("/suppliers/product/{id}")
