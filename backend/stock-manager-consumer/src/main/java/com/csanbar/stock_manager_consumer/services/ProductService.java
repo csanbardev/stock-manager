@@ -6,6 +6,7 @@ import com.csanbar.stock_manager_consumer.repositories.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -22,7 +23,7 @@ public class ProductService {
     }
 
     public PaginatedResponse<Product> getAllProducts(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("proName").ascending());
 
         Page<Product> productPage = productRepository.findAll(pageable);
 
