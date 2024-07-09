@@ -98,4 +98,16 @@ public class PurchaseService {
         }
 
     }
+
+    public PaginatedResponse<Purchase> getAllPurchases(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Purchase> purchases = purchaseRepository.findAll(pageable);
+
+        return new PaginatedResponse<>(
+                purchases.getContent(),
+                purchases.getTotalPages(),
+                purchases.getTotalElements(),
+                purchases.getNumber()
+        );
+    }
 }
