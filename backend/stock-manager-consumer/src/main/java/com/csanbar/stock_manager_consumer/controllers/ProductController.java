@@ -16,8 +16,10 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public PaginatedResponse<Product> getAllProducts(@RequestParam int page,
+                                                     @RequestParam int size
+    ) {
+        return productService.getAllProducts(page, size);
     }
 
     @GetMapping("/products/caducity")

@@ -21,8 +21,17 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public PaginatedResponse<Product> getAllProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Product> productPage = productRepository.findAll(pageable);
+
+        return new PaginatedResponse<>(
+                productPage.getContent(),
+                productPage.getTotalPages(),
+                productPage.getTotalElements(),
+                productPage.getNumber()
+        );
     }
 
     public boolean createProduct(Product product) {
@@ -36,22 +45,22 @@ public class ProductService {
     }
 
     public boolean updateProduct(Product product) {
-       try {
-           Product updated = productRepository.findByProId(product.proId);
+        try {
+            Product updated = productRepository.findByProId(product.proId);
 
-           if (updated != null) {
-               updated.setProName(product.proName);
-               updated.setProCaducity(product.proCaducity);
-               updated.setProQuantity(product.proQuantity);
-               updated.setProEntryDate(product.proEntryDate);
+            if (updated != null) {
+                updated.setProName(product.proName);
+                updated.setProCaducity(product.proCaducity);
+                updated.setProQuantity(product.proQuantity);
+                updated.setProEntryDate(product.proEntryDate);
 
-               productRepository.save(updated);
-               return true;
-           }
-           return false;
-       }catch (Error error){
-           return false;
-       }
+                productRepository.save(updated);
+                return true;
+            }
+            return false;
+        } catch (Error error) {
+            return false;
+        }
     }
 
     public boolean deleteProduct(Product product) {
@@ -63,7 +72,7 @@ public class ProductService {
                 return true;
             }
             return false;
-        }catch (Error error){
+        } catch (Error error) {
             return false;
         }
     }
@@ -85,7 +94,7 @@ public class ProductService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> productPage = productRepository.findByProQuantityIsLessThanEqual(Integer.parseInt(quantity), pageable);
 
-        return  new PaginatedResponse<>(
+        return new PaginatedResponse<>(
                 productPage.getContent(),
                 productPage.getTotalPages(),
                 productPage.getTotalElements(),
