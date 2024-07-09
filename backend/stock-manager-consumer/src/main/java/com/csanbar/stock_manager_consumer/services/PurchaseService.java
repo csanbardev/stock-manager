@@ -1,10 +1,11 @@
 package com.csanbar.stock_manager_consumer.services;
 
-import com.csanbar.stock_manager_consumer.models.Product;
-import com.csanbar.stock_manager_consumer.models.ProductPurchase;
-import com.csanbar.stock_manager_consumer.models.Purchase;
-import com.csanbar.stock_manager_consumer.models.Supplier;
+import com.csanbar.stock_manager_consumer.models.*;
 import com.csanbar.stock_manager_consumer.repositories.PurchaseRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -79,8 +80,9 @@ public class PurchaseService {
         return original;
     }
 
-    public List<Product> getProductsByState(Long id, String status) {
+    public PaginatedResponse<Product> getProductsByState(Long id, String status, int size, int page) {
         try {
+
             Purchase purchase = purchaseRepository.findByPurId(id);
             if (purchase == null) {
                 throw new RuntimeException("Purchase not exists");
@@ -89,10 +91,23 @@ public class PurchaseService {
                     productPurchase -> status.equals(productPurchase.prpStatus)
             ).map(ProductPurchase::getProduct).toList();
 
-            return productService.getAllProductsById(filteredProductPurchases);
+            return productService.getAllProductsById(filteredProductPurchases, size, page);
+
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public PaginatedResponse<Purchase> getAllPurchases(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Purchase> purchases = purchaseRepository.findAll(pageable);
+
+        return new PaginatedResponse<>(
+                purchases.getContent(),
+                purchases.getTotalPages(),
+                purchases.getTotalElements(),
+                purchases.getNumber()
+        );
     }
 }

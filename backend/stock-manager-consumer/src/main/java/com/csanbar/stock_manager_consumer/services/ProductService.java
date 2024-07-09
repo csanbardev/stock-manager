@@ -1,7 +1,12 @@
 package com.csanbar.stock_manager_consumer.services;
 
+import com.csanbar.stock_manager_consumer.models.PaginatedResponse;
 import com.csanbar.stock_manager_consumer.models.Product;
 import com.csanbar.stock_manager_consumer.repositories.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,8 +22,17 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public PaginatedResponse<Product> getAllProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("proName").ascending());
+
+        Page<Product> productPage = productRepository.findAll(pageable);
+
+        return new PaginatedResponse<>(
+                productPage.getContent(),
+                productPage.getTotalPages(),
+                productPage.getTotalElements(),
+                productPage.getNumber()
+        );
     }
 
     public boolean createProduct(Product product) {
@@ -32,22 +46,22 @@ public class ProductService {
     }
 
     public boolean updateProduct(Product product) {
-       try {
-           Product updated = productRepository.findByProId(product.proId);
+        try {
+            Product updated = productRepository.findByProId(product.proId);
 
-           if (updated != null) {
-               updated.setProName(product.proName);
-               updated.setProCaducity(product.proCaducity);
-               updated.setProQuantity(product.proQuantity);
-               updated.setProEntryDate(product.proEntryDate);
+            if (updated != null) {
+                updated.setProName(product.proName);
+                updated.setProCaducity(product.proCaducity);
+                updated.setProQuantity(product.proQuantity);
+                updated.setProEntryDate(product.proEntryDate);
 
-               productRepository.save(updated);
-               return true;
-           }
-           return false;
-       }catch (Error error){
-           return false;
-       }
+                productRepository.save(updated);
+                return true;
+            }
+            return false;
+        } catch (Error error) {
+            return false;
+        }
     }
 
     public boolean deleteProduct(Product product) {
@@ -59,27 +73,58 @@ public class ProductService {
                 return true;
             }
             return false;
-        }catch (Error error){
+        } catch (Error error) {
             return false;
         }
     }
 
-    public List<Product> getByCaducity(int caducity) {
-        Date fechaLimite = new Date(System.currentTimeMillis() + (caducity * 24 * 60 * 60 * 1000));
-        return productRepository.findByProCaducityBefore(fechaLimite);
+    public PaginatedResponse<Product> getByCaducity(int caducity, int page, int size) {
+        Date limitDate = new Date(System.currentTimeMillis() + (caducity * 24 * 60 * 60 * 1000));
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productRepository.findByProCaducityBefore(limitDate, pageable);
+
+        return new PaginatedResponse<>(
+                productPage.getContent(),
+                productPage.getTotalPages(),
+                productPage.getTotalElements(),
+                productPage.getNumber()
+        );
     }
 
-    public List<Product> getByQuantity(String quantity) {
-        return productRepository.findByProQuantityIsLessThanEqual(Integer.parseInt(quantity));
+    public PaginatedResponse<Product> getByQuantity(String quantity, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productRepository.findByProQuantityIsLessThanEqual(Integer.parseInt(quantity), pageable);
+
+        return new PaginatedResponse<>(
+                productPage.getContent(),
+                productPage.getTotalPages(),
+                productPage.getTotalElements(),
+                productPage.getNumber()
+        );
     }
 
-    public List<Product> getAllProductsById(List<Product> productList) {
+    public PaginatedResponse<Product> getAllProductsById(List<Product> productList, int size, int page) {
+        Pageable pageable = PageRequest.of(page, size);
         List<Long> proIds = productList.stream()
                 .map(Product::getProId)
                 .collect(Collectors.toList());
 
-        List<Product> products = productRepository.findAllByProIdIn(proIds);
-        return products;
+        Page<Product> productPage = productRepository.findAllByProIdIn(proIds, pageable);
+        return new PaginatedResponse<>(
+                productPage.getContent(),
+                productPage.getTotalPages(),
+                productPage.getTotalElements(),
+                productPage.getNumber()
+        );
+    }
+
+    public List<Product> getAllProductsById(List<Product> productList) {
+
+        List<Long> proIds = productList.stream()
+                .map(Product::getProId)
+                .collect(Collectors.toList());
+
+        return productRepository.findAllByProIdIn(proIds);
     }
 
     public Product getByProId(long proId) {

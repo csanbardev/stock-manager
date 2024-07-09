@@ -1,5 +1,6 @@
 package com.csanbar.stock_manager_consumer.controllers;
 
+import com.csanbar.stock_manager_consumer.models.PaginatedResponse;
 import com.csanbar.stock_manager_consumer.models.Product;
 import com.csanbar.stock_manager_consumer.services.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +16,24 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public PaginatedResponse<Product> getAllProducts(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "10") int size
+    ) {
+        return productService.getAllProducts(page, size);
     }
 
-    @GetMapping("/products/caducity/{caducity}")
-    public List<Product> getProductsByCaducity(@PathVariable String caducity) {
-        return productService.getByCaducity(Integer.parseInt(caducity));
+    @GetMapping("/products/caducity")
+    public PaginatedResponse<Product> getProductsByCaducity(@RequestParam int caducity,
+                                                            @RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
+        return productService.getByCaducity(caducity, page, size);
     }
 
-    @GetMapping("/products/quantity/{quantity}")
-    public List<Product> getProductsByQuantity(@PathVariable String quantity) {
-        return productService.getByQuantity(quantity);
+    @GetMapping("/products/quantity")
+    public PaginatedResponse<Product> getProductsByQuantity(@RequestParam String quantity,
+                                                            @RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
+        return productService.getByQuantity(quantity, page, size);
     }
 
     @PostMapping("/products")
