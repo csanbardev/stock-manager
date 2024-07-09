@@ -20,5 +20,7 @@ public interface ProductRepository extends MongoRepository<Product, Integer> {
 
     Page<Product> findByProQuantityIsLessThanEqual(int quantity, Pageable pageable);
 
+    Page<Product> findAllByProIdIn(List<Long> proIds, Pageable pageable);
+
     List<Product> findAllByProIdIn(List<Long> proIds);
 }

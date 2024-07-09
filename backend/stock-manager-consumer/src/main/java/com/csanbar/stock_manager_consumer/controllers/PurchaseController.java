@@ -1,5 +1,6 @@
 package com.csanbar.stock_manager_consumer.controllers;
 
+import com.csanbar.stock_manager_consumer.models.PaginatedResponse;
 import com.csanbar.stock_manager_consumer.models.Product;
 import com.csanbar.stock_manager_consumer.services.PurchaseService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class PurchaseController {
 
 
     @GetMapping("/purchases/{id}")
-    public List<Product> getPurchaseState(@PathVariable Long id, @RequestParam String status) {
-      return purchaseService.getProductsByState(id, status);
+    public PaginatedResponse<Product> getPurchaseState(@PathVariable Long id, @RequestParam String status, @RequestParam int size, @RequestParam int page) {
+      return purchaseService.getProductsByState(id, status, size, page);
     }
 }

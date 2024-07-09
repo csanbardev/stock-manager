@@ -103,13 +103,28 @@ public class ProductService {
         );
     }
 
-    public List<Product> getAllProductsById(List<Product> productList) {
+    public PaginatedResponse<Product> getAllProductsById(List<Product> productList, int size, int page) {
+        Pageable pageable = PageRequest.of(page, size);
         List<Long> proIds = productList.stream()
                 .map(Product::getProId)
                 .collect(Collectors.toList());
 
-        List<Product> products = productRepository.findAllByProIdIn(proIds);
-        return products;
+        Page<Product> productPage = productRepository.findAllByProIdIn(proIds, pageable);
+        return new PaginatedResponse<>(
+                productPage.getContent(),
+                productPage.getTotalPages(),
+                productPage.getTotalElements(),
+                productPage.getNumber()
+        );
+    }
+
+    public List<Product> getAllProductsById(List<Product> productList) {
+
+        List<Long> proIds = productList.stream()
+                .map(Product::getProId)
+                .collect(Collectors.toList());
+
+        return productRepository.findAllByProIdIn(proIds);
     }
 
     public Product getByProId(long proId) {
