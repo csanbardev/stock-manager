@@ -1,6 +1,7 @@
 spring:
   application:
     name: stock-manager-producer
+
 datasource:
   my-connection:
     jdbc-url: jdbc:mysql://localhost:3306/des_stock_manager
@@ -10,3 +11,5 @@ datasource:
     pool-name: "crud-pool"
     auto-commit: true
 
+server:
+  port: 8082
