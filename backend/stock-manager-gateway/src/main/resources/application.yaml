@@ -13,7 +13,7 @@ spring:
           uri: ${PRODUCER_API_URI:http://localhost:8082}
           predicates:
             - Path=/products/**
-            - Method=POST,PUT,DELETE
+            - Method=POST,PATCH,DELETE
         - id: supplier-get-service
           uri: ${CONSUMER_API_URI:http://localhost:8081}
           predicates:
@@ -23,7 +23,7 @@ spring:
           uri: ${PRODUCER_API_URI:http://localhost:8082}
           predicates:
             - Path=/supplier/**
-            - Method=POST,PUT,DELETE
+            - Method=POST,PATCH,DELETE
         - id: purchase-get-service
           uri: ${CONSUMER_API_URI:http://localhost:8081}
           predicates:
@@ -33,6 +33,6 @@ spring:
           uri: ${PRODUCER_API_URI:http://localhost:8082}
           predicates:
             - Path=/purchases/**
-            - Method=POST,PUT,DELETE
+            - Method=POST,PATCH,DELETE
 
 
